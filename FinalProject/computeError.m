@@ -1,16 +1,17 @@
-function error = computeError(spiketimes, t, F, Sint)
-% tshift = spiketimes(2) - spiketimes(1);
-Fs = interp1(t, F, spiketimes);
+function error = computeError(spiketimes, t, F, Sint, kexc)
 
-lm = fitlm(Fs, Sint);
-res = lm.Residuals.Raw;
-pe = abs(res./Fs);
-sse = sum(res.^2);
-r2 = lm.Rsquared.Adjusted;
-rmse = lm.RMSE;
+Fstand = F - F(1); % standardize by removing baseline force
+tshift = t(find(Fstand > 0.01, 1, 'first')); % set the time when stretch starts to be 0
+stshift = tshift; % shift spiketimes
 
-error.Residuals = res;
-error.PercentError = pe;
-error.SSE = sse;
-error.R2 = r2;
-error.RMSE = rmse;
+Fs = interp1(t - tshift, Fstand, spiketimes - stshift);
+
+S_scaled = Sint*4/kexc; % scaling factor found in the testExcValue script
+
+
+error.Residuals = 
+% error.Residuals = res;
+% error.PercentError = pe;
+% error.SSE = sse;
+% error.R2 = r2;
+% error.RMSE = rmse;
