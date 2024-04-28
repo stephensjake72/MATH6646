@@ -34,3 +34,10 @@ sampledata.F = F(keep);
 sampledata.dF = dF(keep);
 
 save('sampledata.mat', 'sampledata')
+
+%% this section is for some post-processing because I forgot to shift the start time
+load('sampledata.mat')
+tstart = sampledata.t(find(sampledata.F - sampledata.F(1) > .01, 1, 'first'));
+plot(sampledata.t - tstart, sampledata.F - sampledata.F(1))
+sampledata.t = sampledata.t - tstart;
+save('sampledata.mat', 'sampledata')

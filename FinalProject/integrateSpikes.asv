@@ -18,15 +18,13 @@ switch method
             Sint(ii+1) = Sint(ii) + dy(ht(ii-1:ii), yp(ii-1:ii));
         end
     case 'AB3' %AB-3
-        dy = @(H, Y) (23*H(3)*Y(3) - 16*H(2)*Y(2) + 5*H(1)*Y(1))/12;
+        dy = @(H, Y) 23*H(3)*Y(3)/12 -4*H(2)*Y(2)/3 + 5*H(1)*Y(1)/12;
         Sint = zeros(size(spiketimes));
-
-        % initialize with two forward Euler steps
-        % Sint(2) = Sint(1) + ht(2)*yp(2);
-        % Sint(3) = Sint(2) + ht(3)*yp(3);
+        Sint(1) = yp(1)*ht(1);
+        Sint(2) = Sint(1) + ht(2)*(1.5*yp(2) - 0.5*yp(1));
 
         for ii = 3:numel(spiketimes)-1
-            Sint(ii+1) = Sint(ii) + dy(ht(ii-2:ii), yp(ii-2:ii));
+            Sint(ii+1) = Sint(ii) + dy(ht(ii-2:ii), yp(ii-2:dy(ht(ii), yp(ii-2), yp(ii-1), yp(ii));
         end
 end
       

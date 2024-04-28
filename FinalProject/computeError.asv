@@ -22,12 +22,9 @@ Sinterp = interp1(shiftedtimes, Sint, t(twin), 'linear'); % resample integrated 
 % scale the integrated signal as per findings from the testExcValue script
 S_scaled = Sinterp*length(Sint)/2.5;
 
-F = F(twin);
-
+F = F(twin)
 
 % Compute error metrics
 error.lag = stshift;
-error.resid = F - S_scaled;
-error.sqresid = (F - S_scaled).^2;
-error.SSE = sum(error.sqresid);
+% error.error = 
 end

@@ -33,10 +33,12 @@ for ii = 1:numel(D)
     expdata = load(D(ii).name);
 
     st = expdata.data.spiketimes - expdata.data.spiketimes(3);
-    
-    twin = sampledata.t > st(1) & sampledata.t < st(end);
+    st = st(st >= 0);
+    Sint = Sint(st >= 0);
 
-    Sinterp = interp1(st, expdata.Sint, sampledata.t(twin));
+    twin = sampledata.t > 0 & sampledata.t < max(st);
+
+    % Sinterp = interp1()
 
     % stwin = st > 0; % trim initial part
     % subplot(211)
@@ -47,14 +49,11 @@ for ii = 1:numel(D)
     % plot(st, expdata.Sint)
     
     figure
-    subplot(211)
     plot(sampledata.t, sampledata.F)
     hold on
     plot(sampledata.t(twin), sampledata.F(twin))
     yyaxis right
-    plot(sampledata.t(twin), Sinterp, '.k')
-
-
+    plot(st, Sint, '.k')
 end
 yyaxis right
 plot(sampledata.t, sampledata.F)
