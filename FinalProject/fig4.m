@@ -6,12 +6,15 @@ load('sampledata.mat')
 %%
 D = dir();
 
+% set up color palettes
 colors1 = interp1([0 6], [199 233 192; 0 68 27], [0:6])/255
 colors2 = interp1([0 6], [188 189 220; 63 0 125], [0:6])/255
 colors3 = interp1([0 6], [252 146 114; 103 0 13], [0:6])/255
 
+% create a cell to store kexc values
 exccell = {'100', '150', '200', '250', '300', '350', '400'};
 
+% create empty vectors for lag and R2 values for each method
 FElag = zeros(1, 7);
 FER2 = zeros(1, 7);
 AB2lag = zeros(1, 7);
@@ -19,8 +22,10 @@ AB2R2 = zeros(1, 7);
 AB3lag = zeros(1, 7);
 AB3R2 = zeros(1, 7);
 
+% set counter, one index for each method
 count = [1 1 1];
 
+% iterate through files to populate R2 and lag vectors
 for ii = 1:numel(D)
     if contains(D(ii).name, 'FE')
         expdata = load(D(ii).name);
@@ -49,12 +54,14 @@ for ii = 1:numel(D)
     end
 end
 
+% plot line
 subplot(121)
 plot(FElag, FER2, ...
     'Marker', 'o', ...
     'MarkerSize', 8, ...
     'Color', colors1(4, :))
 hold on
+% plot markers with colors corresponding to k_exc
 scatter(FElag, FER2, 36, colors1, 'filled')
 hold on
 plot(AB2lag, AB2R2, ...
