@@ -19,15 +19,18 @@ twin = t > shiftedtimes(1) & t < shiftedtimes(end);
 
 Sinterp = interp1(shiftedtimes, Sint, t(twin), 'linear'); % resample integrated signal at normal time
 
-% scale the integrated signal as per findings from the testExcValue script
-S_scaled = Sinterp*length(Sint)/2.5;
+Fref = Fstand(twin);
 
-F = F(twin);
+lm = fitlm(Sinterp, Fref);
 
 
 % Compute error metrics
 error.lag = stshift;
-error.resid = F - S_scaled;
-error.sqresid = (F - S_scaled).^2;
-error.SSE = sum(error.sqresid);
+error.resid = lm.Residuals.Raw;
+error.sqresid = error.resid.^2;
+error.SSE = lm.SSE;
+error.R2 = lm.Rsquared.Ordinary;
+error.s_hat = Sinterp;
+error.s_ref = Fref;
+error.t = t(twin);
 end

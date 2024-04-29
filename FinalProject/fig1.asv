@@ -1,0 +1,21 @@
+%% fig 1
+
+clc; clear; close all;
+load('sampledata.mat')
+load('results_FE__kRec200_Noise1.mat')
+
+%%
+subplot(221)
+plot(sampledata.t, sampledata.F)
+ax = gca;
+xlabel('time')
+ylabel('s(t)')
+title('Original Signal')
+
+subplot(222)
+plot(data.spiketimes, data.ifr, '.k')
+xlim(ax.XAxis.Limits)
+title('Neural Signal')
+
+subplot(223)
+plot(data.spiketimes, Sint, sampledata.t, )
